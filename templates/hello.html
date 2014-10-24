@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	#1-map{height:100%;width:78%;float:left;border-right:2px 
+solid #bcbcbc;
+	#r-result{height:100%;width:20%;float:left;}
+	//#allmap{width:100%;height:500px;}
+	//p{margin-left:5px;font-size;14px;}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oCA45EpZhbj6Raoma2d6Azsm"></script>
+	<title>地图缩放+标注多个点</title>
+</head>
+
+
+<body>
+	<div id="allmap"></div>
+</body>
+</html>
+
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");    // 创建Map实例
+	var centerpoint = new BMap.Point({{latitude[0]}},{{longitude[0]}});
+	map.centerAndZoom(centerpoint, 16);  // 初始化地图,设置中心点坐标和地图级别
+	//map.setCurrentCity("天津");          // 设置地图显示的城市 此项是必须设置的
+
+	//var point = new BMap.Point(117.10,39.10);
+	//map.centerAndZoom(point,15);
+
+
+	 var points =  new Array(20);
+	  {% for i in range(20): %}
+	  points[{{i}}] = new BMap.Point({{latitude[i]}},{{longitude[i]}});
+	  {% endfor %}	
+
+	//编写自定义函数，创建标注
+	var center;
+	function addMarker(center){
+	var marker = new BMap.Marker(center);
+	map.addOverlay(marker);
+	}
+	var i=0;
+	for(i=0;i<20;i++)
+	{
+		addMarker(points[i]);
+	}
+	
+
+
+	map.enableScrollWheelZoom(true);
+	map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+	
+</script>

@@ -17,24 +17,27 @@ class ExcelApp:
 		with open(filePath,"w") as f:
 			f.write(",".join(title))
 			f.write('\n')
-			#f.writelines( "{x},{y},{z}\n".format(x=arr[0][i],y=self.Y[i],z=arr[i]) for i in range(len(arr[]0)))
 			for data in arr:
 				f.write(",".join(str(x) for x in data))
 				f.write("\n")
-
 				
-'''the main fun '''
-if __name__ == '__main__':
+	def close(self):
+		pass					
+def main():
 	X = [ 53, 53, 28, 28, 53, 53, 30, 28, 53, 53, 44, 43, 43, 42, 43, 43, 40, 31, 42, 30];
 	Y = [ 49, 49, 60, 59, 49, 49, 58, 59, 49, 49, 49, 49, 46, 48, 46, 46, 49, 58, 48, 58];
 	excel = ExcelApp('E:/datas_2014082600_2014082700.xls',0,3,1)
 	a = excel.getData()
-	print(type(a))
+	#print(type(a))
 	title = ['X','Y','Z']
 	arr = map(lambda x,y,z:[x,y,z],X,Y,a)
 	excel.saveToCSV("E:/asdf.csv",title,arr);
-	print("Done")
-
+	excel.close()
+	print("Done")	
+				
+'''the main fun '''
+if __name__ == '__main__':
+	main()
 
 
 

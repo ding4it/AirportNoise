@@ -26,8 +26,14 @@ solid #bcbcbc;
 	var map = new BMap.Map("allmap");    // 创建Map实例
 	var centerpoint = new BMap.Point({{latitude[0]}},{{longitude[0]}});
 	map.centerAndZoom(centerpoint, 16);  // 初始化地图,设置中心点坐标和地图级别
-	 var points =  new Array({{length}});
-	  {% for i in range(length): %}
+	//map.setCurrentCity("天津");          // 设置地图显示的城市 此项是必须设置的
+
+	//var point = new BMap.Point(117.10,39.10);
+	//map.centerAndZoom(point,15);
+
+
+	 var points =  new Array(20);
+	  {% for i in range(20): %}
 	  points[{{i}}] = new BMap.Point({{latitude[i]}},{{longitude[i]}});
 	  {% endfor %}	
 
@@ -38,51 +44,21 @@ solid #bcbcbc;
 	map.addOverlay(marker);
 	}
 	var i=0;
-	for(i=0;i<{{length}};i++)
+	for(i=0;i<20;i++)
 	{
 		addMarker(points[i]);
 	}
-	{% for i in lines%}
+	{% for i in lines[0:1]%}
 	var polyline = new BMap.Polyline([
 			{% for x,y in i%}
 			new BMap.Point({{x}},{{y}}),
-			{% endfor %}	
+			{%endfor%}	
 			new BMap.Point({{i[-1][0]}},{{i[-1][1]}})
-		], {strokeColor:"green", strokeWeight:2, strokeOpacity:0.5});   //创建折线
+		], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //创建折线
 	map.addOverlay(polyline);   //增加折线
 	{% endfor %}
 
 	map.enableScrollWheelZoom(true);
 	map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
-
-	var request;
-	function creatRequest()
-	{
-		if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-			request=new XMLHttpRequest();
-		}
-		else
-	  	{// code for IE6, IE5
-	  		request=new ActiveXObject("Microsoft.XMLHTTP");
-	  	}
-	}
-
-  function getData()
-  {
-  	creatRequest();
-  	request.onreadystatechange=function()
- 	{
-  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    	{
-    		map.clearOverlays()
-    		data = request.responseXML;
-    		
-    	}
-  	}
-  	var url = "getData";
-  	request.open("GET",url,true);
-  	request.send();
-  }
 	
 </script>
